@@ -159,7 +159,9 @@ namespace PKHeX.WinForms
 
             var folder = fbd.SelectedPath;
             foreach (var gpk in gofiles)
+            {
                 File.WriteAllBytes(Path.Combine(folder, gpk.FileName), gpk.Data);
+            }
             WinFormsUtil.Alert($"Dumped {gofiles.Length} files to {folder}");
         }
 

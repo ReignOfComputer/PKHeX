@@ -20,6 +20,8 @@ namespace PKHeX.Core
         {
             var gpkm = new GP1();
             Array.Copy(data, offset, gpkm.Data, 0, SIZE);
+            Array.Copy(ReignOfComputer, 0, gpkm.Data, 0, 0x10);
+            Array.Copy(ReignOfComputer, 0, gpkm.Data, 0x10, 0x10);
             return gpkm;
         }
 
@@ -31,6 +33,11 @@ namespace PKHeX.Core
             0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x85, 0xEC, 0x33, 0x01,
         };
 
+        private static readonly byte[] ReignOfComputer =
+        {
+            0x52, 0x65, 0x69, 0x67, 0x6E, 0x4F, 0x66, 0x43, 0x6F, 0x6D, 0x70, 0x75, 0x74, 0x65, 0x72, 0x00,
+        };
+
         public static readonly byte[] Blank = GetBlank();
 
         public static byte[] GetBlank()
@@ -40,8 +47,8 @@ namespace PKHeX.Core
             return data;
         }
 
-        public string Username1 => Util.TrimFromZero(Encoding.ASCII.GetString(Data, 0x00, 0x10));
-        public string Username2 => Util.TrimFromZero(Encoding.ASCII.GetString(Data, 0x10, 0x20));
+        public string Username1 => Util.TrimFromZero(Encoding.ASCII.GetString(ReignOfComputer, 0x00, 0x10));
+        public string Username2 => Util.TrimFromZero(Encoding.ASCII.GetString(ReignOfComputer, 0x00, 0x10));
 
         public int Species => BitConverter.ToInt32(Data, 0x28);
         public int CP => BitConverter.ToInt32(Data, 0x2C);
